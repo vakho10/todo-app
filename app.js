@@ -29,8 +29,11 @@ function addTask(task) {
         e.target.parentElement.remove();
     });
 
+    const div = document.createElement('div');
+    div.append(span, checkbox, btnRemove);
+
     const li = document.createElement('li');
-    li.append(span, checkbox, btnRemove);
+    li.appendChild(div);
 
     taskList.appendChild(li);
     input.value = '';
