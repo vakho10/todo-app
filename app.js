@@ -26,8 +26,7 @@ function addTask(task) {
     const btnRemove = document.createElement('button');
     btnRemove.textContent = 'X';
     btnRemove.addEventListener('click', (e) => {
-        const parent = e.target.parentElement;
-        parent.parentElement.remove();
+        e.target.parentElement.parentElement.remove();
     });
 
     const div = document.createElement('div');
