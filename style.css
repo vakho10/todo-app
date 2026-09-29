@@ -102,13 +102,17 @@ section:has(#input) {
 #list {
     margin: 0;
     padding: 0;
-    list-style: none;
+    list-style: inherit;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
 li {
+    list-style-type: decimal;
+}
+
+li > div {
     display: flex;
     align-items: center;
     gap: 0.75rem;
