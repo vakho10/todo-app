@@ -242,3 +242,20 @@ button:focus-visible {
         width: 100%;
     }
 }
+
+/* Drag & drop (merge into the existing `li` rule if you like) */
+li {
+    cursor: grab;
+    user-select: none; /* prevents accidentally dragging selected text */
+}
+
+li.dragging {
+    cursor: grabbing;
+}
+
+li.dragging > div {
+    background: var(--primary-light);
+    border: 2px dashed var(--primary);
+    opacity: 0.6;
+    animation: none; /* don't replay pop-in when the element is re-inserted */
+}
