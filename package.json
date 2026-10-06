@@ -1,0 +1,18 @@
+{
+  "name": "todo-app",
+  "description": "A simple TODO app",
+  "author": "vakho10",
+  "repository": "https://github.com/vakho10/todo-app",
+  "license": "Apache-2.0",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  }
+}

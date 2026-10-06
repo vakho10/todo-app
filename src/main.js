@@ -1,3 +1,18 @@
+import './style.css';
+
+document.querySelector('#app').innerHTML = `
+<div class="container">
+    <h1>Todo App</h1>
+    <section>
+        <input type="text" id="input" placeholder="Enter a task">
+        <button id="add">Add new task</button>
+    </section>
+    <section>
+        <ol id="list"></ol>
+    </section>
+</div>
+`;
+
 const inputTask = document.querySelector('#input');
 const btnAdd = document.querySelector('#add');
 const taskList = document.querySelector('#list');

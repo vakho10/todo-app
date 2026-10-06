@@ -1,7 +1,7 @@
 # Todo App
 
-A simple, stylish todo list app built with vanilla HTML, CSS, and JavaScript — no frameworks, no build tools, no
-dependencies.
+A simple, stylish todo list app built with vanilla HTML, CSS, and JavaScript, powered by [Vite](https://vitejs.dev/) for
+fast development and optimized production builds. No frameworks, no runtime dependencies.
 
 ## Features
 
@@ -9,20 +9,49 @@ dependencies.
 - Mark tasks as complete (with strike-through styling)
 - Remove tasks
 - Responsive, modern UI with animations
-- Zero dependencies — runs entirely in the browser
+- No runtime dependencies, and Vite is the only dev dependency
+- Fast dev server with hot module replacement (HMR)
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) (LTS version recommended)
+- npm (included with Node.js)
 
 ## Getting Started
 
-No installation needed. Just open the file:
+Install dependencies:
 
 ```bash
-# Option 1: open directly
-open index.html        # macOS
-start index.html       # Windows
-xdg-open index.html    # Linux
+npm install
+```
 
-# Option 2: serve locally (optional)
-npx serve .
+Run the app in development mode:
+
+```bash
+npm run dev
+```
+
+Then open the local URL shown in your terminal (usually `http://localhost:5173`).
+
+## Available Scripts
+
+| Command           | Description                                     |
+|-------------------|-------------------------------------------------|
+| `npm run dev`     | Start the Vite dev server with hot reloading    |
+| `npm run build`   | Create an optimized production build in `dist/` |
+| `npm run preview` | Preview the production build locally            |
+
+## Project Structure
+
+```
+.
+├── index.html       # App entry point
+├── src/
+│   ├── main.js      # Application logic
+│   └── style.css    # Styles
+├── public/          # Static assets
+├── package.json
+└── vite.config.js   # Vite configuration (optional)
 ```
 
 ## Usage
@@ -34,9 +63,11 @@ npx serve .
 
 ## Tech Stack
 
-- **HTML** — structure
-- **CSS** — styling (custom checkboxes, gradients, animations, responsive layout)
-- **JavaScript** — DOM manipulation for adding/removing tasks
+- **HTML**: structure
+- **CSS**: styling (custom checkboxes, gradients, animations, responsive layout)
+- **JavaScript (ES modules)**: DOM manipulation for adding/removing tasks
+- **Vite** (vanilla JavaScript template): dev server and build tooling
+- **npm**: package management
 
 ## Browser Support
 
@@ -44,4 +75,5 @@ Uses modern CSS (`:has()`). Works in Chrome 105+, Safari 15.4+, Firefox 121+, an
 
 ## License
 
-Free to use and modify.
+This project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). See
+the [LICENSE](LICENSE) file for details.
