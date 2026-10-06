@@ -1,261 +1,116 @@
-:root {
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #eef2ff;
-  --danger: #ef4444;
-  --danger-bg: #fee2e2;
-  --text: #1e293b;
-  --text-muted: #94a3b8;
-  --border: #e2e8f0;
-  --item-bg: #f8fafc;
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #6366f1;
+    --color-primary-dark: #4f46e5;
+    --color-primary-light: #eef2ff;
+    --color-danger: #ef4444;
+    --color-danger-bg: #fee2e2;
+    --color-ink: #1e293b;
+    --color-muted: #94a3b8;
+    --color-line: #e2e8f0;
+    --color-item: #f8fafc;
+    --color-grad-from: #667eea;
+    --color-grad-to: #764ba2;
+
+    --animate-pop-in: pop-in 0.25s ease both;
+
+    @keyframes pop-in {
+        from {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
 }
 
-* {
-  box-sizing: border-box;
-}
+@layer components {
+    /* Layout */
+    .card {
+        @apply w-full bg-white rounded-2xl p-8
+        max-[460px]:px-4 max-[460px]:py-6
+        shadow-[0_24px_48px_-12px_rgb(30_27_75/0.25)];
+    }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 3rem 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-}
+    .card-title {
+        @apply mb-6 text-[1.65rem] font-bold text-center tracking-[-0.02em]
+        bg-linear-135 from-grad-from to-grad-to bg-clip-text text-transparent;
+    }
 
-.container {
-  width: 100%;
-  max-width: 520px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 24px 48px -12px rgb(30 27 75 / 0.25);
-  padding: 2rem;
-}
+    .task-form {
+        @apply flex gap-2.5 mb-6 max-[460px]:flex-col;
+    }
 
-h1 {
-  margin: 0 0 1.5rem;
-  font-size: 1.65rem;
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+    .task-list {
+        @apply flex flex-col gap-2;
+    }
 
-/* Input row */
-section:has(#input) {
-  display: flex;
-  gap: 0.625rem;
-  margin-bottom: 1.5rem;
-}
+    /* Form controls */
+    .task-input {
+        @apply flex-1 min-w-0 px-[0.9em] py-[0.7em] text-ink bg-white outline-none
+        border-2 border-line rounded-[10px] placeholder:text-muted
+        transition-[border-color,box-shadow] duration-200
+        focus:border-primary focus:ring-4 focus:ring-primary/15;
+    }
 
-#input {
-  flex: 1;
-  min-width: 0;
-  padding: 0.7em 0.9em;
-  font: inherit;
-  color: var(--text);
-  background: #fff;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
+    .btn-add {
+        @apply px-[1.1em] py-[0.7em] font-semibold text-white bg-primary
+        rounded-[10px] cursor-pointer shadow-[0_4px_12px_rgb(99_102_241/0.35)]
+        transition-[background-color,transform] duration-200
+        hover:bg-primary-dark active:translate-y-px max-[460px]:w-full
+        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+    }
 
-#input::placeholder {
-  color: var(--text-muted);
-}
+    /* Task item (li) + drag state */
+    .task-item {
+        @apply list-decimal cursor-grab select-none has-checked:opacity-60;
 
-#input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgb(99 102 241 / 0.15);
-}
+        &.dragging {
+            @apply cursor-grabbing;
+        }
 
-#add {
-  padding: 0.7em 1.1em;
-  font: inherit;
-  font-weight: 600;
-  color: #fff;
-  background: var(--primary);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgb(99 102 241 / 0.35);
-  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
-}
+        &.dragging > .task-row {
+            @apply bg-primary-light border-2 border-dashed border-primary
+            opacity-60 animate-none;
+        }
+    }
 
-#add:hover {
-  background: var(--primary-dark);
-}
+    /* Task row (div inside li) */
+    .task-row {
+        @apply flex items-center gap-3 px-[0.9em] py-[0.8em] bg-item
+        border border-line rounded-[10px] animate-pop-in
+        transition-[background-color,border-color,opacity] duration-200
+        hover:bg-primary-light hover:border-indigo-200;
+    }
 
-#add:active {
-  transform: translateY(1px);
-}
+    .task-checkbox {
+        @apply relative shrink-0 size-[1.3em] m-0 appearance-none cursor-pointer
+        border-2 border-slate-300 rounded-md
+        transition-colors duration-200
+        hover:border-primary checked:bg-primary checked:border-primary
+        after:hidden checked:after:block after:absolute after:top-1/2 after:left-1/2
+        after:w-[0.32em] after:h-[0.6em] after:border-white
+        after:border-r-2 after:border-b-2
+        after:-translate-x-1/2 after:-translate-y-[65%] after:rotate-45;
+    }
 
-/* Task list */
-#list {
-  margin: 0;
-  padding: 0;
-  list-style: inherit;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+    .task-text {
+        @apply flex-1 leading-[1.4] [overflow-wrap:anywhere]
+        transition-colors duration-200;
+    }
 
-li {
-  list-style-type: decimal;
-}
+    /* Completed state: text follows the checkbox sibling */
+    .task-checkbox:checked + .task-text {
+        @apply text-muted line-through;
+    }
 
-li > div {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.8em 0.9em;
-  background: var(--item-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  animation: pop-in 0.25s ease both;
-  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
-}
-
-li:hover {
-  background: var(--primary-light);
-  border-color: #c7d2fe;
-}
-
-@keyframes pop-in {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* Custom checkbox — visually moved to the left via flex order */
-li input[type="checkbox"] {
-  order: -1;
-  appearance: none;
-  -webkit-appearance: none;
-  flex-shrink: 0;
-  width: 1.3em;
-  height: 1.3em;
-  margin: 0;
-  border: 2px solid #cbd5e1;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-li input[type="checkbox"]:hover {
-  border-color: var(--primary);
-}
-
-li input[type="checkbox"]:checked {
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-li input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0.32em;
-  height: 0.6em;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: translate(-50%, -65%) rotate(45deg);
-}
-
-/* Task text */
-li span {
-  flex: 1;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-  transition: color 0.2s;
-}
-
-/* Completed state */
-li:has(input:checked) {
-  opacity: 0.6;
-}
-
-li:has(input:checked) span {
-  color: var(--text-muted);
-  text-decoration: line-through;
-}
-
-/* Remove button */
-li button {
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  width: 2em;
-  height: 2em;
-  padding: 0;
-  font: inherit;
-  font-weight: 700;
-  color: var(--text-muted);
-  background: transparent;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-li button:hover {
-  background: var(--danger-bg);
-  color: var(--danger);
-}
-
-/* Accessibility */
-button:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-/* Mobile */
-@media (max-width: 460px) {
-  body {
-    padding: 1.25rem 0.75rem;
-  }
-
-  .container {
-    padding: 1.5rem 1rem;
-  }
-
-  section:has(#input) {
-    flex-direction: column;
-  }
-
-  #add {
-    width: 100%;
-  }
-}
-
-/* Drag & drop (merge into the existing `li` rule if you like) */
-li {
-  cursor: grab;
-  user-select: none; /* prevents accidentally dragging selected text */
-}
-
-li.dragging {
-  cursor: grabbing;
-}
-
-li.dragging > div {
-  background: var(--primary-light);
-  border: 2px dashed var(--primary);
-  opacity: 0.6;
-  animation: none; /* don't replay pop-in when the element is re-inserted */
+    .btn-remove {
+        @apply shrink-0 grid place-items-center size-8 p-0 font-bold text-muted
+        bg-transparent rounded-lg cursor-pointer transition-colors duration-200
+        hover:bg-danger-bg hover:text-danger
+        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+    }
 }

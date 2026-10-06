@@ -1,14 +1,14 @@
 import './style.css';
 
 document.querySelector('#app').innerHTML = `
-<div class="container">
-    <h1>Todo App</h1>
-    <section>
-        <input type="text" id="input" placeholder="Enter a task">
-        <button id="add">Add new task</button>
+<div class="card">
+    <h1 class="card-title">Todo App</h1>
+    <section class="task-form">
+        <input type="text" id="input" class="task-input" placeholder="Enter a task">
+        <button id="add" class="btn-add">Add new task</button>
     </section>
     <section>
-        <ol id="list"></ol>
+        <ol id="list" class="task-list"></ol>
     </section>
 </div>
 `;
@@ -32,23 +32,29 @@ addTask('Read a book');
 addTask('Do laundry');
 
 function addTask(task) {
-    const span = document.createElement('span');
-    span.textContent = task;
-
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    checkbox.className = 'task-checkbox';
+
+    const span = document.createElement('span');
+    span.textContent = task;
+    span.className = 'task-text';
 
     const btnRemove = document.createElement('button');
     btnRemove.textContent = 'X';
+    btnRemove.className = 'btn-remove';
     btnRemove.addEventListener('click', (e) => {
-        e.target.parentElement.parentElement.remove();
+        e.currentTarget.closest('li').remove();
     });
 
     const div = document.createElement('div');
-    div.append(span, checkbox, btnRemove);
+    div.className = 'task-row';
+    // Checkbox must come directly before the text for the `+` sibling selector
+    div.append(checkbox, span, btnRemove);
 
     const li = document.createElement('li');
-    li.draggable = true; // make tasks draggable
+    li.className = 'task-item';
+    li.draggable = true;
     li.appendChild(div);
 
     taskList.appendChild(li);
