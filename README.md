@@ -100,6 +100,19 @@ To change the look of the app, edit the tokens or component classes in `src/styl
 4. Drag a task up or down to reorder it
 5. Click **X** to remove a task
 
+### Use Cases (1)
+
+```mermaid
+flowchart LR
+    A(Add new task) --> B[User types task in field]
+    B --> C[User clicks add new task button]
+    C --> D{"Field empty?"}
+    D -- yes --> E([Refuse: don't add new task to list])
+    D -- no --> F(["Add new task to list (in the end)"])
+    E --> G(end)
+    F --> G(end)
+```
+
 ## Tech Stack
 
 - **HTML**: structure
