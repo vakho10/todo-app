@@ -1,0 +1,12 @@
+(function(){let e=document.createElement(`link`).relList;if(e&&e.supports&&e.supports(`modulepreload`))return;for(let e of document.querySelectorAll(`link[rel="modulepreload"]`))n(e);new MutationObserver(e=>{for(let t of e)if(t.type===`childList`)for(let e of t.addedNodes)e.tagName===`LINK`&&e.rel===`modulepreload`&&n(e)}).observe(document,{childList:!0,subtree:!0});function t(e){let t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),t.credentials=e.crossOrigin===`use-credentials`?`include`:e.crossOrigin===`anonymous`?`omit`:`same-origin`,t}function n(e){if(e.ep)return;e.ep=!0;let n=t(e);fetch(e.href,n)}})(),document.querySelector(`#app`).innerHTML=`
+<div class="card">
+    <h1 class="card-title">Todo App</h1>
+    <section class="task-form">
+        <input type="text" id="input" class="task-input" placeholder="Enter a task">
+        <button id="add" class="btn-add">Add new task</button>
+    </section>
+    <section>
+        <ol id="list" class="task-list"></ol>
+    </section>
+</div>
+`;var e=document.querySelector(`#input`),t=document.querySelector(`#add`),n=document.querySelector(`#list`);t.addEventListener(`click`,()=>{let t=e.value;t.trim()&&r(t)}),r(`Buy groceries`),r(`Go to the gym`),r(`Read a book`),r(`Do laundry`);function r(t){let r=document.createElement(`input`);r.type=`checkbox`,r.className=`task-checkbox`;let i=document.createElement(`span`);i.textContent=t,i.className=`task-text`;let a=document.createElement(`button`);a.textContent=`X`,a.className=`btn-remove`,a.addEventListener(`click`,e=>{e.currentTarget.closest(`li`).remove()});let o=document.createElement(`div`);o.className=`task-row`,o.append(r,i,a);let s=document.createElement(`li`);s.className=`task-item`,s.draggable=!0,s.appendChild(o),n.appendChild(s),e.value=``}n.addEventListener(`dragstart`,e=>{e.dataTransfer.effectAllowed=`move`,requestAnimationFrame(()=>e.target.closest(`li`).classList.add(`dragging`))}),n.addEventListener(`dragover`,e=>{e.preventDefault(),e.dataTransfer.dropEffect=`move`;let t=n.querySelector(`.dragging`);if(!t)return;let r=i(e.clientY);r==null?n.appendChild(t):n.insertBefore(t,r)}),n.addEventListener(`drop`,e=>e.preventDefault()),n.addEventListener(`dragend`,()=>{n.querySelector(`.dragging`)?.classList.remove(`dragging`)});function i(e){return[...n.querySelectorAll(`li:not(.dragging)`)].reduce((t,n)=>{let r=n.getBoundingClientRect(),i=e-r.top-r.height/2;return i<0&&i>t.offset?{offset:i,task:n}:t},{offset:-1/0}).task}

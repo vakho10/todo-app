@@ -3,6 +3,9 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
     base: '/todo-app/',
+    build: {
+      outDir: 'docs',
+    },
     plugins: [
         tailwindcss(),
     ],
