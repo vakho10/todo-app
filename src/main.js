@@ -5,6 +5,7 @@ document.querySelector('#app').innerHTML = `
     <h1 class="card-title">Todo App</h1>
     <section class="task-form">
         <input type="text" id="input" class="task-input" placeholder="Enter a task">
+        <input id="color" class="flex column stretch" type="color" name="color" value="#fae0ad" />
         <button id="add" class="btn-add">Add new task</button>
     </section>
     <section>
@@ -14,6 +15,7 @@ document.querySelector('#app').innerHTML = `
 `;
 
 const inputTask = document.querySelector('#input');
+const color = document.querySelector('#color');
 const btnAdd = document.querySelector('#add');
 const taskList = document.querySelector('#list');
 
@@ -49,6 +51,7 @@ function addTask(task) {
 
     const div = document.createElement('div');
     div.className = 'task-row';
+    div.style.backgroundColor = color.value;
     // Checkbox must come directly before the text for the `+` sibling selector
     div.append(checkbox, span, btnRemove);
 
